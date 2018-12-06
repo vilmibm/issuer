@@ -4,13 +4,13 @@ but maybe you'll find it useful too
 
 ## setup
 
-  git clone git@github.com:vilmibm/issuer.git
-  cd issuer
-  cp issuer/example.config.py issuer/config.py
-  nano issuer/config.py # add your personal github token
-  python3 -mvenv issuer.venv
-  source issuer.venv/bin/activate
-  pip install -e .
+    git clone git@github.com:vilmibm/issuer.git
+    cd issuer
+    cp issuer/example.config.py issuer/config.py
+    nano issuer/config.py # add your personal github token
+    python3 -mvenv issuer.venv
+    source issuer.venv/bin/activate
+    pip install -e .
 
 ## generate tracking issue checklists
 
