@@ -26,16 +26,19 @@ def cli():
   pass
 
 @cli.command()
-@click.option('--repo', default='gitcoin', multiple=True, help='repo to search in. can be specified multiple times.')
+@click.option('--owner', required=True, help='user or org among whose repos to search.')
+@click.option('--repo', required=True, multiple=True, help='repo to search in. can be specified multiple times.')
 @click.option('--label', required=True, multiple=True, help='label to use. can be specified multiple times.')
-def tracking_checklist(repo, label):
+def tracking_checklist(owner, repo, label):
   repo_ids = []
   for r in repo:
     result = query( '''
-        query($name: String!) {
-          repository(owner: "github", name: $name) { id }
+        query($name: String!, $owner: String!) {
+          repository(owner: $owner, name: $name) { id }
         }
-        ''', variables={"name": r})
+        ''', variables={"name": r, "owner": owner})
+    if result.get('errors'):
+      raise ValueError(result['errors'])
     repo_ids.append(result['data']['repository']['id'])
   result = query('''
     query($repo_ids: [ID!]!, $labels: [String!]!) {
